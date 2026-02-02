@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation of Relational Database Management Systems</title>
+    <link rel="stylesheet" href="Information System.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({startOnLoad: true});
+    </script>
+    <style>
+        /* Additional styles matching the template */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+        
+        th {
+            background-color: var(--bg-card-hover);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        code.inline-code {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent-cyan);
+        }
+        .mermaid {
+            background-color: white !important;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .section-header {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-cyan);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        pre code {
+            display: block;
+            background-color: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="index.html" class="home-link">
+        <img src="UNI Logo.jpeg" class="site-logo" alt="Information System Logo">
+        </a>
+        <h2>Information System</h2>
+        <button id="themeToggle" class="theme-toggle">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Toggle Theme</span>
+        </button>
+    </div>
+    <div class="container">
+        <a href="#" class="exit-link">Exit Course</a>
+        <header>
+            <div class="syllabus-label">Lecture 9</div>
+            <h1>Operation of Relational Database Management Systems</h1>
+            <p class="subtitle">console, client software, web interface - Part 4</p>
+        </header>
+        <p>Training session: Let's dive into a "Broken Database" troubleshooting scenario. We'll simulate a realistic operational mess: a slow query, a missing index, and a structural bottleneck.</p>
+        
+        <div class="timeline-wrapper">
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>Phase 1: Setting the Stage (The "Messy" Data)</b></h3>
+                        <p>Copy and run this script in your Console or Client Software (DBeaver/Workbench). It creates two tables: customers and orders, but it "forgets" to add any performance optimization.</p>
+                        <h4>1. Create Tables</h4>
+                        <pre><code>CREATE TABLE customers (
+    customer_id INT,
+    name VARCHAR(255),
+    email VARCHAR(255)
+);
+
+CREATE TABLE orders (
+    order_id INT,
+    c_id INT,          -- This is supposed to be the customer_id
+    amount DECIMAL(10,2),
+    order_date DATE
+);</code></pre>
+                        <h4>2. Insert "Messy" Data</h4>
+                        <pre><code>INSERT INTO customers VALUES 
+(1, 'Alice Smith', 'alice@example.com'),
+(2, 'Bob Jones', 'bob@example.com');
+
+INSERT INTO orders VALUES 
+(101, 1, 500.00, '2025-01-01'),
+(102, 1, 150.00, '2025-01-02'),
+(103, 2, 900.00, '2025-01-03');</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>Phase 2: Operational Troubleshooting</b></h3>
+                        <h4>Task 1: Find the Bottleneck (The Client Software)</h4>
+                        <p>In DBeaver or MySQL Workbench, run an EXPLAIN on this join:</p>
+                        <pre><code>EXPLAIN SELECT name, SUM(amount)
+FROM customers
+JOIN orders ON customers.customer_id = orders.c_id
+GROUP BY name;</code></pre>
+                        <p><b>The Problem:</b> You will see "Full Table Scan" (usually in red). Because there are no Primary Keys or Indexes, the database has to read every single row to find a match.</p>
+                        <p><b>The Fix:</b> Use the GUI to add a Primary Key to customer_id.</p>
+
+                        <h4>Task 2: Structural Integrity (The Console)</h4>
+                        <p>The orders table has a column called c_id, but it isn't "linked" to the customers. If you delete a customer, the orders stay behind like ghosts (Orphans).</p>
+                        <pre><code>-- Step 1: Add the Primary Key we missed
+ALTER TABLE customers ADD PRIMARY KEY (customer_id);
+
+-- Step 2: Add the Foreign Key to link them
+ALTER TABLE orders ADD CONSTRAINT fk_customer 
+FOREIGN KEY (c_id) REFERENCES customers(customer_id);</code></pre>
+
+                        <h4>Task 3: Security & Access (The Web Interface)</h4>
+                        <p>Imagine a new intern needs to view the total sales but must not see customer emails (GDPR/Privacy).</p>
+                        <pre><code>CREATE VIEW v_sales_summary AS
+SELECT c_id, amount FROM orders;</code></pre>
+                        <p>Go to Views and create a "Safe View". Use the Privileges tab to grant the intern access only to the v_sales_summary view, not the raw tables.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>Phase 3: The "Final Exam" Challenge</b></h3>
+                        <p>The Scenario: Your boss wants a report of all orders over $200, but only for customers who have an 'a' in their email.</p>
+                        <p><b>Write the query.</b></p>
+                        <p><b>Use EXPLAIN again.</b></p>
+                        <p><b>Does it show a "Using filesort" or "Using temporary" warning?</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Information System.js"></script>
+</body>
+</html>

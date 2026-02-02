@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information System</title>
+    <link rel="stylesheet" href="Information System.css">
+    <style>
+        /* Additional styles for the main page */
+        .intro {
+            background-color: var(--bg-card);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .intro h2 {
+            color: var(--accent-cyan);
+            margin-top: 0;
+        }
+        .course-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px 35px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--accent-blue);
+        }
+        .course-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.4rem;
+            color: var(--accent-blue);
+        }
+        .course-card p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .coming-soon {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <img src="UNI Logo.jpeg" class="site-logo" alt="Information System Logo">
+        <h2>Information System</h2>
+        <button id="themeToggle" class="theme-toggle">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Toggle Theme</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="syllabus-label">Welcome</div>
+            <h1>Information System</h1>
+            <p class="subtitle">Mastering Data, Databases, and Systems Design</p>
+        </header>
+
+        <section class="intro">
+            <h2>Course Overview</h2>
+            <p>This comprehensive course introduces you to the fundamentals of Information Systems. You'll learn how to design, model, and implement effective data systems that support business needs.</p>
+            <p>Starting with data modeling concepts, we progress through database design, system analysis, and practical implementation techniques. Each lecture builds on the previous one, providing both theoretical foundations and hands-on examples.</p>
+            <p>Perfect for students, developers, and professionals looking to understand the backbone of modern information systems.</p>
+        </section>
+
+        <h2>Course Lectures</h2>
+
+        <div class="timeline-wrapper">
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 1:</b> From Concept to Code - The Data Modeling Journey</h3>
+                        <p></p>
+                    </div>
+                    <a href="First Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator purple-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 2:</b> Data definition and manipulation language (SQL); <b>P.1</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Second Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator green-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 3:</b> Data definition and manipulation language (SQL); <b>P.2</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Third Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 4:</b> Data definition and manipulation language (SQL); <b>P.3</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Fourth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+            <div class="lesson-item">
+                <div class="indicator purple-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 5:</b> Data definition and manipulation language (SQL); <b>P.4</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Fifth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+
+            <div class="lesson-item">
+                <div class="indicator green-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 6:</b> Operation of relational database management systems and related tools (console, client software, web interface); <b>P.1</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Sixth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 7:</b> Operation of relational database management systems and related tools (console, client software, web interface); <b>P.2</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Seventh Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+
+           <div class="lesson-item">
+                <div class="indicator purple-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 8:</b> Operation of relational database management systems and related tools (console, client software, web interface); <b>P.3</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Eighth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+           <div class="lesson-item">
+                <div class="indicator green-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 9:</b> Operation of relational database management systems and related tools (console, client software, web interface); <b>P.4</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Ninth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+
+               <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card course-card">
+                    <div class="content-area">
+                        <h3><b>Lecture 10:</b> Introduction to exchange formats ( CSV ,  XML , JSON ...) and database backup / migration. <b>P.1</b></h3>
+                        <p></p>
+                    </div>
+                    <a href="Tenth Lecture Information System.html" class="view-topic">View Lecture</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <div class="lesson-item">
+                 <div class="indicator purple-glow"></div>
+                 <div class="card course-card">
+                      <div class="content-area">
+                            <h3><b>Lecture 11:</b> Introduction to exchange formats ( CSV ,  XML , JSON ...) and database backup / migration. <b>P.2</b></h3>
+                            <p></p>
+                      </div>
+                      <a href="Eleventh Lecture Information System.html" class="view-topic">View Lecture</a>
+                 </div>
+                </div>
+          </div>
+
+
+                <div class="lesson-item">
+                 <div class="indicator green-glow"></div>
+                 <div class="card course-card">
+                      <div class="content-area">
+                            <h3><b>Lecture 12:</b> Introduction to exchange formats ( CSV ,  XML , JSON ...) and database backup / migration. <b>P.3</b></h3>
+                            <p></p>
+                      </div>
+                      <a href="Twelfth Lecture Information System.html" class="view-topic">View Lecture</a>
+                 </div>
+                </div>
+          </div>         
+
+    <script src="Information System.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structure Query Language: The DBMS</title>
+    <link rel="stylesheet" href="Information System.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({startOnLoad: true});
+    </script>
+    <style>
+        /* Additional styles matching the template */
+        .center-content {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+       
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+       
+        th {
+            background-color: var(--bg-card-hover);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        code.inline-code {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent-cyan);
+        }
+        .mermaid {
+            background-color: white !important;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+       
+        .section-header {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-cyan);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        pre code {
+            display: block;
+            background-color: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .quiz-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .quiz-question {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .quiz-question h4 {
+            margin: 0 0 10px 0;
+            color: white;
+        }
+        .quiz-question ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quiz-question li {
+            background-color: #34495e;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .quiz-question li:hover {
+            background-color: #4a6a8a;
+        }
+        .quiz-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .show-answer-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .show-answer-btn:hover {
+            background-color: var(--accent-cyan);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Logic explanation styling */
+        .example-box {
+            padding: 15px;
+            border-left: 4px solid;
+            margin: 15px 0;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 0 8px 8px 0;
+        }
+        .correct-box { border-color: #27ae60; }
+        .incorrect-box { border-color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="index.html" class="home-link">
+        <img src="UNI Logo.jpeg" class="site-logo" alt="Information System Logo">
+        </a>
+        <h2>Information System</h2>
+        <button id="themeToggle" class="theme-toggle" type="button">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Toggle Theme</span>
+        </button>
+    </div>
+    <div class="container">
+        <a href="#" class="exit-link">Exit Course</a>
+        <header>
+            <div class="syllabus-label">Lecture 2</div>
+            <h1>Structure Query Language</h1>
+            <p class="subtitle">The Database Management System (DBMS)</p>
+        </header>
+        <p>SQL is the programming language provided by a DBMS to support all of the operations associated with a relational database.</p>
+ 
+        <div class="timeline-wrapper">
+         <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>1. Data Definition Language (DDL)</b></h3>
+                        <p>Data Definition Language (DDL) is the part of SQL provided for creating or altering tables. These commands only create the structure; they do not put any data into the database.</p>
+                        <br>
+                        <div class="center-content">
+                           <img src="Picture2.jpg" alt="SQL Structure DDL DML" class="diagram">
+                        </div>
+                        <h4><b>Key Concepts:</b></h4>
+                        <ul>
+                            <li><b>Structure Only:</b> Defines the "skeleton" of the database.</li>
+                            <li><b>Syntax Rules:</b> Not case sensitive, but uppercase is used for commands and lowercase for names.</li>
+                            <li><b>Termination:</b> Each command is terminated by a semicolon <code>;</code>.</li>
+                        </ul>
+                        <p><b>Example Commands:</b></p>
+                        <pre><code><B>CREATE DATABASE BandBooking;
+CREATE TABLE Band (BandName varchar(25), NumberOfMembers integer);
+ALTER TABLE Band ADD PRIMARY KEY (BandName);
+ALTER TABLE Band-Booking ADD FOREIGN KEY (BandName) REFERENCES Band(BandName);</B></code></pre>
+                       
+                        <p><b>Note:</b> When an attribute is defined, its data type must be specified (e.g., <code>varchar(25)</code> allows up to 25 characters).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>2. SQL Statements and Database Tables</b></h3>
+                        <h4>SQL Statements</h4>
+                        <p>Most of the actions you need to perform on a database are done with SQL statements.</p>
+                        <p>SQL statements consist of keywords that are easy to understand.</p>
+                        <h4>Database Tables</h4>
+                        <p>A database most often contains one or more tables. Each table is identified by a name (e.g. "Customers" or "Orders"), and contain records (rows) with data.</p>
+                        <p>In this tutorial we will use the well-known Northwind sample database (included in MS Access and MS SQL Server).</p>
+                        <p>Below is a selection from the Customers table used in the examples:</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CustomerID</th>
+                                    <th>CustomerName</th>
+                                    <th>ContactName</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>PostalCode</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Alfreds Futterkiste</td>
+                                    <td>Maria Anders</td>
+                                    <td>Obere Str. 57</td>
+                                    <td>Berlin</td>
+                                    <td>12209</td>
+                                    <td>Germany</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Ana Trujillo Emparedados y helados</td>
+                                    <td>Ana Trujillo</td>
+                                    <td>Avda. de la Constitución 2222</td>
+                                    <td>México D.F.</td>
+                                    <td>05021</td>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Antonio Moreno Taquería</td>
+                                    <td>Antonio Moreno</td>
+                                    <td>Mataderos 2312</td>
+                                    <td>México D.F.</td>
+                                    <td>05023</td>
+                                    <td>Mexico</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>The table above contains five records (one for each customer) and seven columns (CustomerID, CustomerName, ContactName, Address, City, PostalCode, and Country). </p>
+                                                
+                         <pre><code><B>INSERT INTO `customers` (`CustomerID`, `CustomerName`, `ContactName`, `Address`,
+`City`, `PostalCode`, `Country`) VALUES ('1', 'SHERIF ROSTOM', 'ROSTOM',
+'250 FIRST DISTRICT', 'EGYPT', 'ZZ099', 'NEW CAIRO'); </B></code></pre>
+
+                        <h4>Keep in Mind That...</h4>
+                        <p>SQL keywords are NOT case sensitive: <code>select</code> is the same as <code>SELECT</code>. In this tutorial, we will write all SQL keywords in upper-case.</p>
+                        <h4>Semicolon after SQL Statements?</h4>
+                        <p>Semicolon is the standard way to separate each SQL statement in database systems that allow more than one statement to be executed in the same call.</p>
+
+                        <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                            <h3 class="html-title"><b>3. Extracting Data: The SELECT Statement</b></h3>
+                            <p>To pull information out of a table, we use the <code>SELECT</code> command. If you want to see <b>all</b> the data inside a table (every column and every row), you use the asterisk <code>*</code> symbol.</p>
+                            
+                            <div class="example-box correct-box">
+                                <strong>Correct Example:</strong>
+                                <p>To select all records from the Customers table:</p>
+                                <code>SELECT * FROM Customers;</code>
+                                <p><small>The <b>*</b> acts as a wildcard meaning "everything".</small></p>
+                            </div>
+
+                            <div class="example-box incorrect-box">
+                                <strong>Incorrect Examples:</strong>
+                                <p>SQL does not recognize "ALL" as a column wildcard, and you cannot leave the space after SELECT empty:</p>
+                                <ul>
+                                    <li><code>SELECT ALL FROM Customers;</code> (Wrong)</li>
+                                    <li><code>SELECT FROM Customers;</code> (Wrong)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h4>Important SQL Commands Summary</h4>
+                        <ul>
+                            <li><b>SELECT</b> - extracts data from a database</li>
+                            <li><b>UPDATE</b> - updates data in a database</li>
+                            <li><b>DELETE</b> - deletes data from a database</li>
+                            <li><b>INSERT INTO</b> - inserts new data into a database</li>
+                            <li><b>CREATE DATABASE</b> - creates a new database</li>
+                            <li><b>ALTER DATABASE</b> - modifies a database</li>
+                            <li><b>CREATE TABLE</b> - creates a new table</li>
+                            <li><b>ALTER TABLE</b> - modifies a table</li>
+                            <li><b>DROP TABLE</b> - deletes a table</li>
+                            <li><b>CREATE INDEX</b> - creates an index (search key)</li>
+                            <li><b>DROP INDEX</b> - deletes an index</li>
+                        </ul>
+
+                        <div class="quiz-section">
+                            <h3>Test Your Knowledge</h3>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>Which SQL statement is used to select all records from a table named 'Customers'?</h4>
+                                    <ul>
+                                        <li>SELECT FROM Customers;</li>
+                                        <li>SELECT ALL FROM Customers;</li>
+                                        <li>SELECT * FROM Customers;</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: C (Because the * symbol represents all columns)</p>
+                            </div>
+
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>What is a table in a database?</h4>
+                                    <ul>
+                                        <li>A collection of databases</li>
+                                        <li>A structured set of data organized in rows and columns</li>
+                                        <li>A list of SQL statements</li>
+                                        <li>A command for executing SQL queries</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>Are SQL keywords case-sensitive?</h4>
+                                    <ul>
+                                        <li>Yes, they are case-sensitive.</li>
+                                        <li>No, they are not case-sensitive.</li>
+                                        <li>Only in certain database systems.</li>
+                                        <li>It depends on the SQL statement.</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>Why is a semicolon used at the end of SQL statements?</h4>
+                                    <ul>
+                                        <li>To improve readability</li>
+                                        <li>To separate multiple SQL statements</li>
+                                        <li>To make SQL statements case-insensitive</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script src="Information System.js"></script>
+</body>
+</html>

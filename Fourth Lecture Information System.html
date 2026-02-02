@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structure Query Language: The DBMS</title>
+    <link rel="stylesheet" href="Information System.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({startOnLoad: true});
+    </script>
+    <style>
+        /* Additional styles matching the template */
+        .center-content {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+       
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+       
+        th {
+            background-color: var(--bg-card-hover);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        code.inline-code {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent-cyan);
+        }
+        .mermaid {
+            background-color: white !important;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+       
+        .section-header {
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-cyan);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        pre code {
+            display: block;
+            background-color: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+        }
+        .quiz-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .quiz-question {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .quiz-question h4 {
+            margin: 0 0 10px 0;
+            color: white;
+        }
+        .quiz-question ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .quiz-question li {
+            background-color: #34495e;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .quiz-question li:hover {
+            background-color: #4a6a8a;
+        }
+        .quiz-answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #27ae60;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .show-answer-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .show-answer-btn:hover {
+            background-color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="index.html" class="home-link">
+        <img src="UNI Logo.jpeg" class="site-logo" alt="Information System Logo">
+        </a>
+        <h2>Information System</h2>
+        <button id="themeToggle" class="theme-toggle">
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span>Toggle Theme</span>
+        </button>
+    </div>
+    <div class="container">
+        <a href="#" class="exit-link">Exit Course</a>
+        <header>
+            <div class="syllabus-label">Lecture 5</div>
+            <h1>Structure Query Language</h1>
+            <p class="subtitle">The Database Management System (DBMS)</p>
+        </header>
+        <p>SQL is the programming language provided by a DBMS to support all of the operations associated with a relational database.</p>
+       
+        <div class="timeline-wrapper">
+            <div class="lesson-item">
+                <div class="indicator blue-glow"></div>
+                <div class="card">
+                    <div class="content-area">
+                        <h3 class="html-title"><b>SQL SELECT DISTINCT Statement</b></h3>
+                        <p>The SELECT DISTINCT statement is used to return only distinct (different) values.</p>
+                        <h4><b>Example</b></h4>
+                        <p>Get your own SQL Server</p>
+                        <p>Select all the different countries from the "Customers" table:</p>
+                        <pre><code>SELECT DISTINCT Country FROM Customers;</code></pre>
+                        <p>Result:</p>
+                        <p>Number of Records: 21</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Argentina</td>
+                                </tr>
+                                <tr>
+                                    <td>Austria</td>
+                                </tr>
+                                <tr>
+                                    <td>Belgium</td>
+                                </tr>
+                                <tr>
+                                    <td>Brazil</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Inside a table, a column often contains many duplicate values; and sometimes you only want to list the different (distinct) values.</p>
+                        <h4><b>Syntax</b></h4>
+                        <pre><code>SELECT DISTINCT column1, column2, ...
+FROM table_name;</code></pre>
+                        <h4><b>Demo Database</b></h4>
+                        <p>Below is a selection from the Customers table used in the examples:</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CustomerID</th>
+                                    <th>CustomerName</th>
+                                    <th>ContactName</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>PostalCode</th>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Alfreds Futterkiste</td>
+                                    <td>Maria Anders</td>
+                                    <td>Obere Str. 57</td>
+                                    <td>Berlin</td>
+                                    <td>12209</td>
+                                    <td>Germany</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Ana Trujillo Emparedados y helados</td>
+                                    <td>Ana Trujillo</td>
+                                    <td>Avda. de la Constitución 2222</td>
+                                    <td>México D.F.</td>
+                                    <td>05021</td>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Antonio Moreno Taquería</td>
+                                    <td>Antonio Moreno</td>
+                                    <td>Mataderos 2312</td>
+                                    <td>México D.F.</td>
+                                    <td>05023</td>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Around the Horn</td>
+                                    <td>Thomas Hardy</td>
+                                    <td>120 Hanover Sq.</td>
+                                    <td>London</td>
+                                    <td>WA1 1DP</td>
+                                    <td>UK</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Berglunds snabbköp</td>
+                                    <td>Christina Berglund</td>
+                                    <td>Berguvsvägen 8</td>
+                                    <td>Luleå</td>
+                                    <td>S-958 22</td>
+                                    <td>Sweden</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4><b>SELECT Example Without DISTINCT</b></h4>
+                        <p>If you omit the DISTINCT keyword, the SQL statement returns the "Country" value from all the records of the "Customers" table:</p>
+                        <pre><code>SELECT Country FROM Customers;</code></pre>
+                        <p>Result:</p>
+                        <p>Number of Records: 91</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Germany</td>
+                                </tr>
+                                <tr>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>Mexico</td>
+                                </tr>
+                                <tr>
+                                    <td>UK</td>
+                                </tr>
+                                <tr>
+                                    <td>Sweden</td>
+                                </tr>
+                                <tr>
+                                    <td>Germany</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4><b>Count Distinct</b></h4>
+                        <p>By using the DISTINCT keyword in a function called COUNT, we can return the number of different countries.</p>
+                        <pre><code>SELECT COUNT(DISTINCT Country) FROM Customers;</code></pre>
+                        <div class="quiz-section">
+                            <h3>Test Your Knowledge</h3>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>Which of the following SQL statements would return a list of all unique countries from a table named 'Customers'?</h4>
+                                    <ul>
+                                        <li>SELECT UNIQUE Country FROM Customers;</li>
+                                        <li>SELECT Country FROM Customers;</li>
+                                        <li>SELECT DISTINCT Country FROM Customers;</li>
+                                        <li>SELECT * FROM Customers WHERE Country IS UNIQUE;</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: C</p>
+                            </div>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>Select all the different values from the Country column in the Customers table.</h4>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: SELECT DISTINCT Country FROM Customers;</p>
+                            </div>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>What would be the result of omitting the DISTINCT keyword in a statement like SELECT DISTINCT Country FROM Customers; ?</h4>
+                                    <ul>
+                                        <li>It would result in an error</li>
+                                        <li>It would return all values in the Country column, including duplicate values.</li>
+                                        <li>It would remove all null values from the Country column</li>
+                                        <li>It would sort the countries alphabetically</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>What does the following SQL statement do? SELECT COUNT(DISTINCT Country) FROM Customers;</h4>
+                                    <ul>
+                                        <li>Returns all countries in the Customers table, excluding the 10 first countries</li>
+                                        <li>Returns the number of different countries in the Customers table</li>
+                                        <li>Returns only the first 10 countries in the Customers table</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+                            <div class="quiz-item">
+                                <div class="quiz-question">
+                                    <h4>In which scenario would you most likely use the DISTINCT keyword?</h4>
+                                    <ul>
+                                        <li>To select all rows from a table</li>
+                                        <li>To return unique values from a column that contains duplicates</li>
+                                        <li>To delete duplicate rows in a table</li>
+                                        <li>To filter rows that contain null values</li>
+                                    </ul>
+                                </div>
+                                <button class="show-answer-btn" type="button" onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show Answer</button>
+                                <p class="quiz-answer">Answer: B</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Information System.js"></script>
+</body>
+</html>
